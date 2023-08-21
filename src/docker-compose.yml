@@ -1,0 +1,13 @@
+version: '3'
+services:
+  db:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: sql_server
+    volumes: 
+      - ${PWD}/.data:/var/opt/mssql/data 
+    ports:
+        - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=MySqlServer123!
+      - MSSQL_PID=Developer

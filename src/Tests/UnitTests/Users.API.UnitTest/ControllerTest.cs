@@ -35,7 +35,7 @@ public class ControllerTest
         
         _controller = new UserController(moqRepository.Object);
         var result = _controller.Post(new User { Name = "Danilo", Email = "danilo@email.com", Password = "123"});
-        var okResult = result as CreatedObjectResult;
+        var okResult = result as ObjectResult;
 
         Assert.Equal(201, okResult.StatusCode);
     }

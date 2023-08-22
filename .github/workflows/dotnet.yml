@@ -27,8 +27,10 @@ jobs:
     - name: Running Unit Tests
       run: |
         cd src/Tests/UnitTests/Users.API.UnitTest
+        dotnet restore
         dotnet test
     - name: Running Integration Tests
       run: |
         cd src/Tests/IntegrationTests/Users.API.IntegrationTest
+        dotnet restore
         dotnet test

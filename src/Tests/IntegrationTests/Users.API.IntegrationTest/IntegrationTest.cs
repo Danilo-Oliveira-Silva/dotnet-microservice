@@ -76,7 +76,8 @@ public class IntegrationTest: IClassFixture<WebApplicationFactory<Program>>
          var inputObjLogin = new {
             Name = "Danilo",
             Email = "danilos@email.com",
-            Password = "1234"
+            LastName = "Silva",
+            Password = "123456789"
         };
         var responselogin = await _clientTest.PostAsync(url,new StringContent(JsonConvert.SerializeObject(inputObjLogin), System.Text.Encoding.UTF8, "application/json"));
         var responseLoginString = await responselogin.Content.ReadAsStringAsync();

@@ -22,6 +22,7 @@ namespace Users.API.Services
         {
             var claims = new ClaimsIdentity();
             claims.AddClaim(new Claim(ClaimTypes.Email, user.Email!));
+            claims.AddClaim(new Claim(ClaimTypes.Name, user.Name));
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor()

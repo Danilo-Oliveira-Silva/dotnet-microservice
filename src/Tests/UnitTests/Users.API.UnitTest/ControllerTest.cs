@@ -31,10 +31,10 @@ public class ControllerTest
     public void TestControllerSignup(string dataString)
     {
         Moq.Mock<IUserRepository> moqRepository = new Moq.Mock<IUserRepository>();
-        moqRepository.Setup(r => r.Post(It.IsAny<User>())).Returns(new User{ UserId = 1, Name = "Danilo", Email = "danilo@email.com", Password = "123"});
+        moqRepository.Setup(r => r.Post(It.IsAny<UserDTO>())).Returns(new User{ UserId = 1, Name = "Danilo", Email = "danilo@email.com", Password = "123"});
         
         _controller = new UserController(moqRepository.Object);
-        var result = _controller.Post(new User { Name = "Danilo", Email = "danilo@email.com", Password = "123"});
+        var result = _controller.Post(new UserDTO { Name = "Danilo", Email = "danilo@email.com", Password = "123"});
         var okResult = result as ObjectResult;
 
         Assert.Equal(201, okResult.StatusCode);

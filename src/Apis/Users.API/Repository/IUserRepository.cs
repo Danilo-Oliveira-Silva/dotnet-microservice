@@ -5,6 +5,6 @@ namespace Users.API.Repository;
 
 public interface IUserRepository
 {
-    User Post(User user);
+    User Post(UserDTO user);
     User Login(AuthDTORequest login);
 }

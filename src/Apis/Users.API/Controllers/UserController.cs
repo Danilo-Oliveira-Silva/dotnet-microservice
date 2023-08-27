@@ -23,21 +23,43 @@ namespace Users.API.Controllers
         }
 
         [HttpPost("signup")]
-        public IActionResult Post([FromBody] User user)
+        public IActionResult Post([FromBody] UserDTO user)
         {
-            User newUser = _repository.Post(user);
-            string token = new TokenManager().Generate(newUser);
-            AuthDTOResponse response = new AuthDTOResponse { Token = token };
-            return Created("", response);
+            try
+            {
+                User newUser = _repository.Post(user);
+                string token = new TokenManager().Generate(newUser);
+                AuthDTOResponse response = new AuthDTOResponse { Token = token };
+                return Created("", response);
+            }
+            catch(ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message});
+            }
+            catch(Exception ex)
+            {
+                return  BadRequest(new { message = ex.Message});
+            }
         }
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] AuthDTORequest login)
         {
-            User userFound = _repository.Login(login);
-            string token = new TokenManager().Generate(userFound);
-            AuthDTOResponse response = new AuthDTOResponse { Token = token };
-            return Ok(response);
+            try
+            {
+                User userFound = _repository.Login(login);
+                string token = new TokenManager().Generate(userFound);
+                AuthDTOResponse response = new AuthDTOResponse { Token = token };
+                return Ok(response);
+            }
+            catch(ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message});
+            }
+            catch(Exception ex)
+            {
+                return  BadRequest(new { message = ex.Message});
+            }
         }
     }
 }

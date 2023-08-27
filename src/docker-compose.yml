@@ -1,6 +1,6 @@
 version: '3'
 services:
-  db:
+  sqlserverdb:
     image: mcr.microsoft.com/azure-sql-edge:latest
     container_name: sql_server
     volumes: 
@@ -11,3 +11,25 @@ services:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=MySqlServer123!
       - MSSQL_PID=Developer
+
+  rabbitmq:
+     image: rabbitmq:3-management
+     container_name: queue            
+     ports: 
+      - 5672:5672
+      - 15000:15672
+     volumes:
+      - ${PWD}/.data/rabbitmq/data/:/var/lib/rabbitmq/
+      - ${PWD}/.data/rabbitmq/log/:/var/log/rabbitmq/        
+     restart: always
+
+  mongodb:
+    image: mongo
+    container_name: database
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Mottu2023!
+    volumes:
+     - ${PWD}/.data/mongodb/data:/data/db
+    ports:
+      - 27017:27017

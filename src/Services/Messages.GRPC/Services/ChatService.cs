@@ -16,13 +16,15 @@ namespace Messages.GRPC.Services
 
         public override async Task<JoinUserResponse> JoinUserChat(JoinUserRequest request, ServerCallContext context)
         {
+            
             var newUser = new User {
-                Id = new Guid(request.Id),
+                Id = request.UserId,
                 Name = request.Name
             };
-            _logger.LogInformation("user: " + newUser.Name + " connected");
-            _roomService.AddUserToRoomAsync(newUser);
-            return new JoinUserResponse { RoomId = 1};
+            _roomService.CreateRoom(request.RoomId);
+
+            await _roomService.AddUserToRoomAsync(newUser, request.RoomId);
+            return new JoinUserResponse { RoomId = request.RoomId };
         }
 
         public override async Task SendMessage(
@@ -36,8 +38,8 @@ namespace Messages.GRPC.Services
                 if (!await requestStream.MoveNext()) return;
             }
 
-            _roomService.ConnectUserStream(new Guid(requestStream.Current.UserId), responseStream);
-            _logger.LogInformation("User Stream: "+requestStream.Current.UserId+"");
+            _roomService.ConnectUserStream(requestStream.Current.UserId, requestStream.Current.RoomId, responseStream);
+            //_logger.LogInformation("User Stream: "+requestStream.Current.UserId+"");
             
 
         
@@ -48,12 +50,13 @@ namespace Messages.GRPC.Services
                     if (!string.IsNullOrEmpty(requestStream.Current.Text))
 					{
                         Console.WriteLine("texto: " + requestStream.Current.Text);  
-                        await _roomService.BroadcastMessageAsync(requestStream.Current);
+                        await _roomService.BroadcastMessageAsync(requestStream.Current.RoomId, requestStream.Current);
                     }
                 }
             } catch (Exception ex) {
                 Console.WriteLine("error " + ex.Message);
             }
+            
         }
     }
 }

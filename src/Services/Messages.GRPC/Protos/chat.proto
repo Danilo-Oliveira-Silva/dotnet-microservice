@@ -12,14 +12,16 @@ service Chat {
 
 message ChatMessage {
   string userId = 1;
-  string text = 2;
+  string roomId = 2;
+  string text = 3;
 }
 
 message JoinUserRequest{
-  string id = 1;
-  string name = 2;
+  string userId = 1;
+  string roomId = 2;
+  string name = 3;
 }
 
 message JoinUserResponse {
-  int32 room_id = 1;
+  string room_id = 1;
 }

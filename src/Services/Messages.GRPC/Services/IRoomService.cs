@@ -4,8 +4,10 @@ namespace Messages.GRPC.Services
 {
     public interface IRoomService
     {
-        Task BroadcastMessageAsync(ChatMessage message);
-        Task<int> AddUserToRoomAsync(User user);
-        void ConnectUserStream(Guid userId, IAsyncStreamWriter<ChatMessage> stream);
+        Task BroadcastMessageAsync(string roomId, ChatMessage message);
+        Task<string> AddUserToRoomAsync(User user, string roomId);
+        void ConnectUserStream(string userId, string roomId, IAsyncStreamWriter<ChatMessage> stream);
+        void CreateRoom(string roomId);
+        
     }
 }

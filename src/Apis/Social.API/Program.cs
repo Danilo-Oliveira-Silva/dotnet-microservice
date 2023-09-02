@@ -4,6 +4,12 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+
+BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
 
 var builder = WebApplication.CreateBuilder(args);
 

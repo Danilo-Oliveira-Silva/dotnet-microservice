@@ -1,5 +1,8 @@
 namespace Social.API.Context;
 using Microsoft.Extensions.Configuration;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 
 public static class ContextConnection {

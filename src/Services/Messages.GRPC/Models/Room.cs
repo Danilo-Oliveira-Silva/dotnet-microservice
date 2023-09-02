@@ -4,12 +4,12 @@ namespace Messages.GRPC.Models
 {
     public class Room
     {
-        public int Id { get; set; }   
+        public string RoomId { get; set; }   
         public List<User> Users { get; set; }
 
-        public Room(int id)
+        public Room(string RoomIdp)
         {
-            Id = id;
+            RoomId  = RoomIdp;
             Users = new List<User>();
         }
 

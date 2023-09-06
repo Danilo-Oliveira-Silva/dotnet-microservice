@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<IRoomService, RoomService>();
+builder.Services.AddSingleton<IProducer, Producer>();
 builder.Services.AddGrpc();
 
 var app = builder.Build();
